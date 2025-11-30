@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  postgres-test:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: test_db
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+    ports:
+      - "5432:5432"
+    tmpfs:
+      - /var/lib/postgresql/data
+
+  redis-test:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --save ""
+
+  backend-test:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres-test
+      - redis-test
+    environment:
+      PORT: 8080
+      ENVIRONMENT: test
+      DATABASE_URL: postgres://test_user:test_password@postgres-test:5432/test_db?sslmode=disable
+      REDIS_URL: redis://redis-test:6379/0
+      JWT_SECRET: test-jwt-secret
+    ports:
+      - "8080:8080"
+    command: ["./main"]
+
+  frontend-test:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - backend-test
+    environment:
+      API_URL: http://backend-test:8080
+      NEXT_PUBLIC_API_URL: http://localhost:8080
+    ports:
+      - "3000:3000"
+    command: ["npm", "run", "start"]

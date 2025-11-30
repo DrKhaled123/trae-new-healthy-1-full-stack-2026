@@ -1,0 +1,46 @@
+{
+  "name": "trae-nutrition-platform-fullstack",
+  "version": "1.0.0",
+  "description": "Complete nutrition and health tracking platform with frontend and backend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run backend:dev\" \"npm run frontend:dev\"",
+    "build": "npm run backend:build && npm run frontend:build",
+    "start": "npm run backend:start",
+    "frontend:dev": "cd frontend && npm run dev",
+    "frontend:build": "cd frontend && npm run build",
+    "frontend:install": "cd frontend && npm install",
+    "backend:dev": "cd backend && go run cmd/server/main.go",
+    "backend:build": "cd backend && go build -o bin/server cmd/server/main.go",
+    "backend:start": "cd backend && ./bin/server",
+    "backend:install": "cd backend && go mod download",
+    "docker:build": "docker-compose build",
+    "docker:start": "docker-compose up -d",
+    "setup": "npm run backend:install && npm run frontend:install",
+    "deploy": "npm run build && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/doctororganic/new.git"
+  },
+  "keywords": [
+    "nutrition",
+    "health",
+    "fitness",
+    "nextjs",
+    "react",
+    "typescript",
+    "golang",
+    "echo",
+    "fullstack"
+  ],
+  "author": "doctororganic",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
