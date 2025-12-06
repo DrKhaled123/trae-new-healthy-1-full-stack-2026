@@ -1,0 +1,157 @@
+{
+  "workouts": [
+    {
+      "id": "hiit_training",
+      "name": {
+        "en": "HIIT Full Body Workout",
+        "ar": "تمرين الجسم الكامل HIIT"
+      },
+      "type": {
+        "en": "High-Intensity Interval Training",
+        "ar": "التدريب عالي الشدة بفواصل"
+      },
+      "duration": "30 min",
+      "difficulty": {
+        "en": "Advanced",
+        "ar": "متقدم"
+      },
+      "equipment_needed": {
+        "en": "Dumbbells, Mat",
+        "ar": "ثقلات, سجادة"
+      },
+      "exercises": [
+        {
+          "name": {
+            "en": "Burpees",
+            "ar": "بربيز"
+          },
+          "sets": 4,
+          "reps": "15",
+          "rest": "30s"
+        },
+        {
+          "name": {
+            "en": "Kettlebell Swings",
+            "ar": "تأرجحات الكيتلبل"
+          },
+          "sets": 4,
+          "reps": "20",
+          "rest": "30s"
+        },
+        {
+          "name": {
+            "en": "Mountain Climbers",
+            "ar": "تسلق الجبل"
+          },
+          "sets": 4,
+          "reps": "30",
+          "rest": "30s"
+        }
+      ]
+    },
+    {
+      "id": "strength_training",
+      "name": {
+        "en": "Upper Body Strength",
+        "ar": "قوة الجزء العلوي من الجسم"
+      },
+      "type": {
+        "en": "Strength Training",
+        "ar": "تدريب القوة"
+      },
+      "duration": "45 min",
+      "difficulty": {
+        "en": "Intermediate",
+        "ar": "متوسط"
+      },
+      "equipment_needed": {
+        "en": "Barbell, Dumbbells, Bench",
+        "ar": "بار, ثقلات, بنش"
+      },
+      "exercises": [
+        {
+          "name": {
+            "en": "Bench Press",
+            "ar": "ضغط البنش"
+          },
+          "sets": 4,
+          "reps": "8-10",
+          "rest": "90s"
+        },
+        {
+          "name": {
+            "en": "Bent Over Rows",
+            "ar": "صف المائل"
+          },
+          "sets": 4,
+          "reps": "8-12",
+          "rest": "60s"
+        },
+        {
+          "name": {
+            "en": "Shoulder Press",
+            "ar": "ضغط الكتف"
+          },
+          "sets": 3,
+          "reps": "10-12",
+          "rest": "60s"
+        }
+      ]
+    },
+    {
+      "id": "yoga_flexibility",
+      "name": {
+        "en": "Yoga Flow for Flexibility",
+        "ar": "تدفق اليوغا للمرونة"
+      },
+      "type": {
+        "en": "Yoga",
+        "ar": "يوغا"
+      },
+      "duration": "60 min",
+      "difficulty": {
+        "en": "Beginner",
+        "ar": "مبتدئ"
+      },
+      "equipment_needed": {
+        "en": "Yoga Mat",
+        "ar": "سجادة يوغا"
+      },
+      "exercises": [
+        {
+          "name": {
+            "en": "Sun Salutation",
+            "ar": "تحية الشمس"
+          },
+          "sets": 5,
+          "reps": "1 flow",
+          "rest": "30s"
+        },
+        {
+          "name": {
+            "en": "Warrior II",
+            "ar": "محارب الثاني"
+          },
+          "sets": 3,
+          "reps": "30s hold each side",
+          "rest": "15s"
+        },
+        {
+          "name": {
+            "en": "Child's Pose",
+            "ar": "وضعية الطفل"
+          },
+          "sets": 3,
+          "reps": "60s hold",
+          "rest": "0s"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "created_at": "2024-01-01T00:00:00Z",
+    "last_updated": "2024-01-01T00:00:00Z",
+    "version": "1.0",
+    "total_count": 3
+  }
+}

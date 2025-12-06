@@ -1,0 +1,175 @@
+{
+  "supplements": [
+    {
+      "id": "whey_protein",
+      "name": {
+        "en": "Whey Protein Isolate",
+        "ar": "بروتين مصل اللبن المعزول"
+      },
+      "category": {
+        "en": "Protein Supplement",
+        "ar": "مكمل البروتين"
+      },
+      "benefits": [
+        {
+          "en": "Muscle growth and recovery",
+          "ar": "نمو العضلات والاستشفاء"
+        },
+        {
+          "en": "High bioavailability",
+          "ar": "توافر حيوي عالي"
+        },
+        {
+          "en": "Rapid absorption",
+          "ar": "امتصاص سريع"
+        }
+      ],
+      "dosage": {
+        "en": "25-30g per serving",
+        "ar": "25-30 جم لكل حصة"
+      },
+      "timing": {
+        "en": "Post-workout or between meals",
+        "ar": "بعد التمرين أو بين الوجبات"
+      }
+    },
+    {
+      "id": "creatine_monohydrate",
+      "name": {
+        "en": "Creatine Monohydrate",
+        "ar": "كرياتين أحادي الهيدرات"
+      },
+      "category": {
+        "en": "Performance Enhancer",
+        "ar": "معزز الأداء"
+      },
+      "benefits": [
+        {
+          "en": "Increased strength and power",
+          "ar": "زيادة القوة والقدرة"
+        },
+        {
+          "en": "Improved muscle endurance",
+          "ar": "تحمل عضلي محسن"
+        },
+        {
+          "en": "Enhanced recovery",
+          "ar": "استشفاء معزز"
+        }
+      ],
+      "dosage": {
+        "en": "5g daily",
+        "ar": "5 جم يوميا"
+      },
+      "timing": {
+        "en": "Any time of day",
+        "ar": "في أي وقت من اليوم"
+      }
+    },
+    {
+      "id": "omega3",
+      "name": {
+        "en": "Omega-3 Fish Oil",
+        "ar": "زيت السمك أوميغا-3"
+      },
+      "category": {
+        "en": "Essential Fatty Acids",
+        "ar": "الأحماض الدهنية الأساسية"
+      },
+      "benefits": [
+        {
+          "en": "Heart health support",
+          "ar": "دعم صحة القلب"
+        },
+        {
+          "en": "Anti-inflammatory properties",
+          "ar": "خصائص مضادة للالتهابات"
+        },
+        {
+          "en": "Joint health",
+          "ar": "صحة المفاصل"
+        }
+      ],
+      "dosage": {
+        "en": "1-3g EPA/DHA daily",
+        "ar": "1-3 جم EPA/DHA يوميا"
+      },
+      "timing": {
+        "en": "With meals",
+        "ar": "مع الوجبات"
+      }
+    },
+    {
+      "id": "vitamin_d3",
+      "name": {
+        "en": "Vitamin D3",
+        "ar": "فيتامين د3"
+      },
+      "category": {
+        "en": "Vitamin",
+        "ar": "فيتامين"
+      },
+      "benefits": [
+        {
+          "en": "Bone health support",
+          "ar": "دعم صحة العظام"
+        },
+        {
+          "en": "Immune function",
+          "ar": "وظيفة المناعة"
+        },
+        {
+          "en": "Mood regulation",
+          "ar": "تنظيم المزاج"
+        }
+      ],
+      "dosage": {
+        "en": "1000-4000 IU daily",
+        "ar": "1000-4000 وحدة دولية يوميا"
+      },
+      "timing": {
+        "en": "With fat-containing meal",
+        "ar": "مع وجبة تحتوي على الدهون"
+      }
+    },
+    {
+      "id": "magnesium",
+      "name": {
+        "en": "Magnesium Glycinate",
+        "ar": "مغنيسيوم جلسينات"
+      },
+      "category": {
+        "en": "Mineral",
+        "ar": "معدن"
+      },
+      "benefits": [
+        {
+          "en": "Muscle relaxation",
+          "ar": "استرخاء العضلات"
+        },
+        {
+          "en": "Sleep quality improvement",
+          "ar": "تحسين جودة النوم"
+        },
+        {
+          "en": "Stress reduction",
+          "ar": "تقليل التوتر"
+        }
+      ],
+      "dosage": {
+        "en": "200-400mg daily",
+        "ar": "200-400 مجم يوميا"
+      },
+      "timing": {
+        "en": "Before bed",
+        "ar": "قبل النوم"
+      }
+    }
+  ],
+  "metadata": {
+    "created_at": "2024-01-01T00:00:00Z",
+    "last_updated": "2024-01-01T00:00:00Z",
+    "version": "1.0",
+    "total_count": 5
+  }
+}

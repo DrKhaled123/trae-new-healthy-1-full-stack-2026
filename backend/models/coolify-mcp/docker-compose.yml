@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  coolify-mcp-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: coolify-mcp-server
+    restart: unless-stopped
+
+    # Environment variables
+    environment:
+      - COOLIFY_API_BASE_URL=https://api.doctorhealthy1.com/api/v1
+      - COOLIFY_API_TOKEN=${COOLIFY_API_TOKEN:-6|uJSYhIJQIypx4UuxbQkaHkidEyiQshLR6U1QNxEQab344fda}
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "node", "-e", "console.log('MCP Server is healthy')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    # Labels for Coolify
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.coolify-mcp.rule=Host(`mcp.doctorhealthy1.com`)"
+      - "traefik.http.routers.coolify-mcp.entrypoints=websecure"
+      - "traefik.http.routers.coolify-mcp.tls.certresolver=letsencrypt"
+      - "traefik.http.services.coolify-mcp.loadbalancer.server.port=8080"
+
+    # Network
+    networks:
+      - web
+
+networks:
+  web:
+    external: true
+    name: web

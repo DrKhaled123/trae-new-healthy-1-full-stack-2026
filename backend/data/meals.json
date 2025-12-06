@@ -1,0 +1,188 @@
+{
+  "meals": [
+    {
+      "id": "mediterranean_chicken",
+      "name": {
+        "en": "Mediterranean Chicken Bowl",
+        "ar": "سلطة الدجاج المتوسطية"
+      },
+      "description": {
+        "en": "Grilled chicken with Mediterranean vegetables and quinoa",
+        "ar": "دجاج مشوي مع الخضروات المتوسطية والكينوا"
+      },
+      "calories": 450,
+      "protein": 38,
+      "carbs": 42,
+      "fat": 16,
+      "prep_time": "25 min",
+      "difficulty": {
+        "en": "Easy",
+        "ar": "سهل"
+      },
+      "ingredients": [
+        {
+          "name": {
+            "en": "Chicken breast",
+            "ar": "صدر الدجاج"
+          },
+          "amount": "150g"
+        },
+        {
+          "name": {
+            "en": "Cherry tomatoes",
+            "ar": "طماطم كرزي"
+          },
+          "amount": "100g"
+        },
+        {
+          "name": {
+            "en": "Cucumber",
+            "ar": "الخيار"
+          },
+          "amount": "80g"
+        },
+        {
+          "name": {
+            "en": "Red onion",
+            "ar": "البصل الأحمر"
+          },
+          "amount": "30g"
+        },
+        {
+          "name": {
+            "en": "Feta cheese",
+            "ar": "جبنة الفيتا"
+          },
+          "amount": "40g"
+        },
+        {
+          "name": {
+            "en": "Quinoa",
+            "ar": "الكينوا"
+          },
+          "amount": "80g"
+        }
+      ]
+    },
+    {
+      "id": "protein_smoothie",
+      "name": {
+        "en": "High-Protein Smoothie",
+        "ar": "عصير بروتيني عالي"
+      },
+      "description": {
+        "en": "Nutrient-dense smoothie perfect for post-workout recovery",
+        "ar": "عصير كثيف المغذيات مثالي للاستشفاء بعد التمرين"
+      },
+      "calories": 320,
+      "protein": 34,
+      "carbs": 38,
+      "fat": 8,
+      "prep_time": "5 min",
+      "difficulty": {
+        "en": "Very Easy",
+        "ar": "سهل جدا"
+      },
+      "ingredients": [
+        {
+          "name": {
+            "en": "Whey protein",
+            "ar": "بروتين مصل اللبن"
+          },
+          "amount": "1 scoop"
+        },
+        {
+          "name": {
+            "en": "Banana",
+            "ar": "الموز"
+          },
+          "amount": "1 medium"
+        },
+        {
+          "name": {
+            "en": "Spinach",
+            "ar": "السبانخ"
+          },
+          "amount": "50g"
+        },
+        {
+          "name": {
+            "en": "Almond milk",
+            "ar": "حبوب اللوز"
+          },
+          "amount": "250ml"
+        },
+        {
+          "name": {
+            "en": "Peanut butter",
+            "ar": "زبدة الفول السوداني"
+          },
+          "amount": "1 tbsp"
+        }
+      ]
+    },
+    {
+      "id": "beef_stir_fry",
+      "name": {
+        "en": "Asian Beef Stir Fry",
+        "ar": "لحم البقري المقلي الآسيوي"
+      },
+      "description": {
+        "en": "Quick and flavorful beef with mixed vegetables",
+        "ar": "لحم بقري سريع ولذيذ مع الخضروات المختلطة"
+      },
+      "calories": 480,
+      "protein": 42,
+      "carbs": 45,
+      "fat": 18,
+      "prep_time": "20 min",
+      "difficulty": {
+        "en": "Medium",
+        "ar": "متوسط"
+      },
+      "ingredients": [
+        {
+          "name": {
+            "en": "Beef strips",
+            "ar": "شرائح اللحم البقري"
+          },
+          "amount": "180g"
+        },
+        {
+          "name": {
+            "en": "Bell peppers",
+            "ar": "الفلفل الملون"
+          },
+          "amount": "120g"
+        },
+        {
+          "name": {
+            "en": "Broccoli",
+            "ar": "البروكلي"
+          },
+          "amount": "100g"
+        },
+        {
+          "name": {
+            "en": "Brown rice",
+            "ar": "الأرز البني"
+          },
+          "amount": "100g"
+        },
+        {
+          "name": {
+            "en": "Soy sauce",
+            "ar": "صلصة الصويا"
+          },
+          "amount": "2 tbsp"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "created_at": "2024-01-01T00:00:00Z",
+    "last_updated": "2024-01-01T00:00:00Z",
+    "version": "1.0",
+    "total_count": 3
+  }
+}
