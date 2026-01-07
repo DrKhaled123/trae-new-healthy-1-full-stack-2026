@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_DB: test_db
       POSTGRES_USER: test_user
-      POSTGRES_PASSWORD: test_password
+      POSTGRES_PASSWORD: ${TEST_POSTGRES_PASSWORD:-test_password}
     ports:
       - "5432:5432"
     tmpfs:
@@ -28,9 +28,9 @@ services:
     environment:
       PORT: 8080
       ENVIRONMENT: test
-      DATABASE_URL: postgres://test_user:test_password@postgres-test:5432/test_db?sslmode=disable
+      DATABASE_URL: postgres://test_user:${TEST_POSTGRES_PASSWORD:-test_password}@postgres-test:5432/test_db?sslmode=disable
       REDIS_URL: redis://redis-test:6379/0
-      JWT_SECRET: test-jwt-secret
+      JWT_SECRET: ${TEST_JWT_SECRET:-test-jwt-secret}
     ports:
       - "8080:8080"
     command: ["./main"]

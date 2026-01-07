@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_DB: trae_nutrition
       POSTGRES_USER: trae_user
-      POSTGRES_PASSWORD: trae_password
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-trae_secure_password}
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./backend/data/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -44,9 +44,9 @@ services:
     environment:
       PORT: 8080
       ENVIRONMENT: production
-      DATABASE_URL: postgres://trae_user:trae_password@postgres:5432/trae_nutrition?sslmode=disable
+      DATABASE_URL: postgres://trae_user:${POSTGRES_PASSWORD:-trae_secure_password}@postgres:5432/trae_nutrition?sslmode=disable
       REDIS_URL: redis://redis:6379/0
-      JWT_SECRET: your-super-secret-jwt-key-change-this-in-production
+      JWT_SECRET: ${JWT_SECRET}
     ports:
       - "8080:8080"
     volumes:

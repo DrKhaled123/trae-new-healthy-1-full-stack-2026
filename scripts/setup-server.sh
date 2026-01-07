@@ -115,14 +115,14 @@ sudo chown $USER:$USER /opt/trae-nutrition
 log_info "Setting up PostgreSQL database..."
 sudo -u postgres psql << EOF
 CREATE DATABASE trae_nutrition;
-CREATE USER trae_user WITH PASSWORD 'trae_secure_password_2024';
+CREATE USER trae_user WITH PASSWORD '${TRAE_DB_PASSWORD:-trae_secure_password_2024}';
 GRANT ALL PRIVILEGES ON DATABASE trae_nutrition TO trae_user;
 \q
 EOF
 
 # Configure Redis
 log_info "Configuring Redis..."
-sudo sed -i 's/^# requirepass/requirepass trae_redis_password_2024/' /etc/redis/redis.conf
+sudo sed -i 's/^# requirepass/requirepass ${TRAE_REDIS_PASSWORD:-trae_redis_password_2024}/' /etc/redis/redis.conf
 sudo systemctl restart redis-server
 
 # Create environment file
@@ -133,13 +133,13 @@ PORT=8080
 ENVIRONMENT=production
 
 # Database Configuration
-DATABASE_URL=postgres://trae_user:trae_secure_password_2024@localhost:5432/trae_nutrition?sslmode=disable
+DATABASE_URL=postgres://trae_user:${TRAE_DB_PASSWORD:-trae_secure_password_2024}@localhost:5432/trae_nutrition?sslmode=disable
 
 # Redis Configuration
-REDIS_URL=redis://:trae_redis_password_2024@localhost:6379/0
+REDIS_URL=redis://:${TRAE_REDIS_PASSWORD:-trae_redis_password_2024}@localhost:6379/0
 
 # JWT Configuration
-JWT_SECRET=trae-super-secret-jwt-key-change-this-in-production-$(date +%s)
+JWT_SECRET=${JWT_SECRET:-$(openssl rand -base64 32)}
 
 # Security Configuration
 BCRYPT_COST=12
