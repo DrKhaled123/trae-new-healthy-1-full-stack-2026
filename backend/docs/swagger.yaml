@@ -1,0 +1,1028 @@
+openapi: 3.0.3
+info:
+  title: Nutrition Platform API
+  description: A comprehensive nutrition and fitness tracking platform API
+  version: 1.0.0
+  contact:
+    name: Nutrition Platform Team
+    email: support@nutritionplatform.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Development server
+  - url: https://api.nutritionplatform.com/v1
+    description: Production server
+
+paths:
+  /health:
+    get:
+      summary: Health check endpoint
+      description: Returns the health status of the API
+      tags:
+        - Health
+      responses:
+        '200':
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  timestamp:
+                    type: string
+                    format: date-time
+                  version:
+                    type: string
+                    example: "1.0.0"
+
+  /users:
+    get:
+      summary: Get all users
+      description: Retrieve a list of all users with pagination
+      tags:
+        - Users
+      parameters:
+        - name: page
+          in: query
+          description: Page number
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    post:
+      summary: Create a new user
+      description: Create a new user account
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /users/{id}:
+    get:
+      summary: Get user by ID
+      description: Retrieve a specific user by their ID
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    put:
+      summary: Update user
+      description: Update user information
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    delete:
+      summary: Delete user
+      description: Delete a user account
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: User deleted successfully
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /foods:
+    get:
+      summary: Get all foods
+      description: Retrieve a list of foods with optional search and filtering
+      tags:
+        - Foods
+      parameters:
+        - name: search
+          in: query
+          description: Search term for food name
+          schema:
+            type: string
+        - name: category
+          in: query
+          description: Food category filter
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        '200':
+          description: List of foods
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  foods:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Food'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    post:
+      summary: Create a new food
+      description: Add a new food item to the database
+      tags:
+        - Foods
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFoodRequest'
+      responses:
+        '201':
+          description: Food created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Food'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /foods/{id}:
+    get:
+      summary: Get food by ID
+      description: Retrieve a specific food item by its ID
+      tags:
+        - Foods
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Food ID
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Food details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Food'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /users/{userId}/food-logs:
+    get:
+      summary: Get user's food logs
+      description: Retrieve food consumption logs for a specific user
+      tags:
+        - Food Logs
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: integer
+            format: int64
+        - name: date
+          in: query
+          description: Filter by specific date (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+        - name: startDate
+          in: query
+          description: Start date for date range filter (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          description: End date for date range filter (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: List of food logs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserFoodLog'
+                  totalCalories:
+                    type: number
+                    format: float
+                  totalProtein:
+                    type: number
+                    format: float
+                  totalCarbs:
+                    type: number
+                    format: float
+                  totalFat:
+                    type: number
+                    format: float
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    post:
+      summary: Log food consumption
+      description: Log food consumption for a user
+      tags:
+        - Food Logs
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFoodLogRequest'
+      responses:
+        '201':
+          description: Food log created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserFoodLog'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /exercises:
+    get:
+      summary: Get all exercises
+      description: Retrieve a list of exercises with optional filtering
+      tags:
+        - Exercises
+      parameters:
+        - name: category
+          in: query
+          description: Exercise category filter
+          schema:
+            type: string
+        - name: difficulty
+          in: query
+          description: Exercise difficulty filter
+          schema:
+            type: string
+            enum: [beginner, intermediate, advanced]
+        - name: page
+          in: query
+          description: Page number
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        '200':
+          description: List of exercises
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  exercises:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Exercise'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /users/{userId}/exercise-logs:
+    get:
+      summary: Get user's exercise logs
+      description: Retrieve exercise logs for a specific user
+      tags:
+        - Exercise Logs
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: integer
+            format: int64
+        - name: date
+          in: query
+          description: Filter by specific date (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: List of exercise logs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserExerciseLog'
+                  totalCaloriesBurned:
+                    type: number
+                    format: float
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    post:
+      summary: Log exercise activity
+      description: Log exercise activity for a user
+      tags:
+        - Exercise Logs
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateExerciseLogRequest'
+      responses:
+        '201':
+          description: Exercise log created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserExerciseLog'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        username:
+          type: string
+          example: "john_doe"
+        email:
+          type: string
+          format: email
+          example: "john@example.com"
+        firstName:
+          type: string
+          example: "John"
+        lastName:
+          type: string
+          example: "Doe"
+        age:
+          type: integer
+          minimum: 1
+          maximum: 150
+          example: 30
+        gender:
+          type: string
+          enum: [male, female, other]
+          example: "male"
+        height:
+          type: number
+          format: float
+          description: Height in centimeters
+          example: 175.5
+        weight:
+          type: number
+          format: float
+          description: Weight in kilograms
+          example: 70.5
+        activityLevel:
+          type: string
+          enum: [sedentary, lightly_active, moderately_active, very_active, extremely_active]
+          example: "moderately_active"
+        goal:
+          type: string
+          enum: [lose_weight, maintain_weight, gain_weight, build_muscle]
+          example: "lose_weight"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    CreateUserRequest:
+      type: object
+      required:
+        - username
+        - email
+        - firstName
+        - lastName
+        - age
+        - gender
+        - height
+        - weight
+        - activityLevel
+        - goal
+      properties:
+        username:
+          type: string
+          minLength: 3
+          maxLength: 50
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        lastName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        age:
+          type: integer
+          minimum: 1
+          maximum: 150
+        gender:
+          type: string
+          enum: [male, female, other]
+        height:
+          type: number
+          format: float
+          minimum: 50
+          maximum: 300
+        weight:
+          type: number
+          format: float
+          minimum: 20
+          maximum: 500
+        activityLevel:
+          type: string
+          enum: [sedentary, lightly_active, moderately_active, very_active, extremely_active]
+        goal:
+          type: string
+          enum: [lose_weight, maintain_weight, gain_weight, build_muscle]
+
+    UpdateUserRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        lastName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        age:
+          type: integer
+          minimum: 1
+          maximum: 150
+        height:
+          type: number
+          format: float
+          minimum: 50
+          maximum: 300
+        weight:
+          type: number
+          format: float
+          minimum: 20
+          maximum: 500
+        activityLevel:
+          type: string
+          enum: [sedentary, lightly_active, moderately_active, very_active, extremely_active]
+        goal:
+          type: string
+          enum: [lose_weight, maintain_weight, gain_weight, build_muscle]
+
+    Food:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: "Apple"
+        brand:
+          type: string
+          example: "Generic"
+        category:
+          type: string
+          example: "Fruits"
+        servingSize:
+          type: number
+          format: float
+          description: Serving size in grams
+          example: 100
+        calories:
+          type: number
+          format: float
+          description: Calories per serving
+          example: 52
+        protein:
+          type: number
+          format: float
+          description: Protein in grams per serving
+          example: 0.3
+        carbohydrates:
+          type: number
+          format: float
+          description: Carbohydrates in grams per serving
+          example: 14
+        fat:
+          type: number
+          format: float
+          description: Fat in grams per serving
+          example: 0.2
+        fiber:
+          type: number
+          format: float
+          description: Fiber in grams per serving
+          example: 2.4
+        sugar:
+          type: number
+          format: float
+          description: Sugar in grams per serving
+          example: 10.4
+        sodium:
+          type: number
+          format: float
+          description: Sodium in milligrams per serving
+          example: 1
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    CreateFoodRequest:
+      type: object
+      required:
+        - name
+        - category
+        - servingSize
+        - calories
+        - protein
+        - carbohydrates
+        - fat
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        brand:
+          type: string
+          maxLength: 100
+        category:
+          type: string
+          minLength: 1
+          maxLength: 100
+        servingSize:
+          type: number
+          format: float
+          minimum: 0.1
+        calories:
+          type: number
+          format: float
+          minimum: 0
+        protein:
+          type: number
+          format: float
+          minimum: 0
+        carbohydrates:
+          type: number
+          format: float
+          minimum: 0
+        fat:
+          type: number
+          format: float
+          minimum: 0
+        fiber:
+          type: number
+          format: float
+          minimum: 0
+        sugar:
+          type: number
+          format: float
+          minimum: 0
+        sodium:
+          type: number
+          format: float
+          minimum: 0
+
+    Exercise:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: "Push-ups"
+        category:
+          type: string
+          example: "Strength Training"
+        difficulty:
+          type: string
+          enum: [beginner, intermediate, advanced]
+          example: "intermediate"
+        description:
+          type: string
+          example: "A bodyweight exercise that targets chest, shoulders, and triceps"
+        instructions:
+          type: array
+          items:
+            type: string
+          example: ["Start in plank position", "Lower body to ground", "Push back up"]
+        muscleGroups:
+          type: array
+          items:
+            type: string
+          example: ["chest", "shoulders", "triceps"]
+        caloriesPerMinute:
+          type: number
+          format: float
+          description: Average calories burned per minute
+          example: 8.5
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    UserFoodLog:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        userId:
+          type: integer
+          format: int64
+          example: 1
+        foodId:
+          type: integer
+          format: int64
+          example: 1
+        food:
+          $ref: '#/components/schemas/Food'
+        quantity:
+          type: number
+          format: float
+          description: Quantity consumed in grams
+          example: 150
+        mealType:
+          type: string
+          enum: [breakfast, lunch, dinner, snack]
+          example: "breakfast"
+        consumedAt:
+          type: string
+          format: date-time
+        totalCalories:
+          type: number
+          format: float
+          description: Total calories for this log entry
+          example: 78
+        totalProtein:
+          type: number
+          format: float
+          example: 0.45
+        totalCarbs:
+          type: number
+          format: float
+          example: 21
+        totalFat:
+          type: number
+          format: float
+          example: 0.3
+        createdAt:
+          type: string
+          format: date-time
+
+    CreateFoodLogRequest:
+      type: object
+      required:
+        - foodId
+        - quantity
+        - mealType
+      properties:
+        foodId:
+          type: integer
+          format: int64
+        quantity:
+          type: number
+          format: float
+          minimum: 0.1
+        mealType:
+          type: string
+          enum: [breakfast, lunch, dinner, snack]
+        consumedAt:
+          type: string
+          format: date-time
+
+    UserExerciseLog:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        userId:
+          type: integer
+          format: int64
+          example: 1
+        exerciseId:
+          type: integer
+          format: int64
+          example: 1
+        exercise:
+          $ref: '#/components/schemas/Exercise'
+        duration:
+          type: integer
+          description: Duration in minutes
+          example: 30
+        intensity:
+          type: string
+          enum: [low, moderate, high]
+          example: "moderate"
+        caloriesBurned:
+          type: number
+          format: float
+          example: 255
+        notes:
+          type: string
+          example: "Felt great today!"
+        performedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+
+    CreateExerciseLogRequest:
+      type: object
+      required:
+        - exerciseId
+        - duration
+        - intensity
+      properties:
+        exerciseId:
+          type: integer
+          format: int64
+        duration:
+          type: integer
+          minimum: 1
+        intensity:
+          type: string
+          enum: [low, moderate, high]
+        notes:
+          type: string
+          maxLength: 500
+        performedAt:
+          type: string
+          format: date-time
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 20
+        total:
+          type: integer
+          example: 100
+        totalPages:
+          type: integer
+          example: 5
+        hasNext:
+          type: boolean
+          example: true
+        hasPrev:
+          type: boolean
+          example: false
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Invalid request"
+        message:
+          type: string
+          example: "The provided data is invalid"
+        code:
+          type: integer
+          example: 400
+        timestamp:
+          type: string
+          format: date-time
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Bad Request"
+            message: "Invalid input data"
+            code: 400
+            timestamp: "2024-01-15T10:30:00Z"
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Not Found"
+            message: "The requested resource was not found"
+            code: 404
+            timestamp: "2024-01-15T10:30:00Z"
+
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Internal Server Error"
+            message: "An unexpected error occurred"
+            code: 500
+            timestamp: "2024-01-15T10:30:00Z"
+
+tags:
+  - name: Health
+    description: Health check endpoints
+  - name: Users
+    description: User management operations
+  - name: Foods
+    description: Food database operations
+  - name: Food Logs
+    description: Food consumption tracking
+  - name: Exercises
+    description: Exercise database operations
+  - name: Exercise Logs
+    description: Exercise activity tracking

@@ -1,0 +1,57 @@
+[Unit]
+Description=Nutrition Platform Backend API Server
+Documentation=https://github.com/your-org/nutrition-platform
+After=network.target postgresql.service redis.service
+Wants=postgresql.service redis.service
+
+[Service]
+Type=simple
+User=deploy
+Group=deploy
+WorkingDirectory=/opt/nutrition-platform
+ExecStart=/usr/local/bin/nutrition-platform-backend
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=30
+Restart=always
+RestartSec=5
+StartLimitInterval=60s
+StartLimitBurst=3
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/nutrition-platform/uploads /opt/nutrition-platform/backups /var/log/nutrition-platform
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictRealtime=true
+RestrictNamespaces=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+SystemCallFilter=@system-service
+SystemCallErrorNumber=EPERM
+
+# Environment
+Environment=ENVIRONMENT=production
+Environment=LOG_LEVEL=info
+Environment=LOG_FORMAT=json
+EnvironmentFile=-/opt/nutrition-platform/.env
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+MemoryMax=1G
+CPUQuota=200%
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=nutrition-platform-backend
+
+[Install]
+WantedBy=multi-user.target
